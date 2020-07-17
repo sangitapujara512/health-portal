@@ -2,6 +2,17 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup'
 import "./styles.css";
+import {connect} from 'react-redux'
+import {setLogin} from '../../actions/loginAction'
+import {setPatient} from '../../actions/patientAction'
+import store from '../../store'
+import {
+    Redirect,
+    Link as Link,
+  } from 'react-router-dom';
+  import Patient from '../Patient'
+  import Doctor from '../Doctor'
+
 
 const loginSchema = Yup.object().shape({
   password: Yup.string()
@@ -19,25 +30,74 @@ const loginSchema = Yup.object().shape({
 });
 
 class LoginForm extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.state={
+            ploggedIn: false,
+            dloggedIn:false,
+           }
+    }
+    
+
   handleSubmit = (values, { setSubmitting }) => {
+    const obj=[{
+        "FirstName": "Sang",
+		"LastName": "Puj",
+        "Mobile": 1111111111,
+        "email": "john.doe@gmail.com",
+        "Medicine": ["Crocin", "Cough Syrup"],
+		"Diagnosys":["fever","throat pain"],
+		"Address" : "Street 1",
+		"City": "Mumbai",
+		"State":"Mah",
+		"Country":"India",
+		"Pincode": 400080,
+		},
+        
+        
+    ]
      if(values.password === 'Healthcare'){
          console.log("Admin")
+         this.setState({
+            dloggedIn:true
+        });
      }
      if(values.password === 'Password'){
         console.log("patient")
+        this.setState({
+            ploggedIn:true
+        });
      }
-
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
+    //  dispatch(setLogin("account","newValue"))
+     this.props.setLogin(values.email,values.password);
+     this.props.setPatient(obj);
+     setSubmitting(false);
+    
+    // setTimeout(() => {
+    //   alert(JSON.stringify(values, null, 2));
+    //   setSubmitting(false);
+    // }, 400);
   };
 
-  render() {
+  render() {   
+       const {ploggedIn,dloggedIn}= this.state
+
+       console.log("PROPS",store.getState())
+       if (ploggedIn) {
+        return <Redirect to='/Patient' />;
+      }   
+      if (dloggedIn) {
+        return <Redirect to='/Doctor' />;
+      } 
     return (
+      
+
       <>
         
+        
         <div style={{alignSelf:'center'}}>
+        <Link to='/'>Home </Link>
         <h1>Login</h1>
         <Formik
           initialValues={{ email: "", password: "" }}
@@ -67,4 +127,18 @@ class LoginForm extends React.Component {
   }
 }
 
-export default LoginForm;
+const mapStateToProps = (state) => ({
+    credentials: [state],
+});
+const mapDispatchToProps = (dispatch) => ({
+    setLogin: (email,password) =>
+        dispatch(setLogin(email,password)),
+        setPatient: (patientDetails) =>
+        dispatch(setPatient(patientDetails)),
+});
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LoginForm);
+
+// export default LoginForm;

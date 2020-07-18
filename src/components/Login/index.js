@@ -97,7 +97,7 @@ class LoginForm extends React.Component {
         
         
         <div style={{alignSelf:'center'}}>
-        <Link to='/'>Home </Link>
+        <Link to='/'>Go to Home </Link>
         <h1>Login</h1>
         <Formik
           initialValues={{ email: "", password: "" }}

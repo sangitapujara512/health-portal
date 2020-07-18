@@ -1,5 +1,6 @@
 import {
-    SET_PATIENT,    
+    SET_PATIENT,
+    UPDATE_PATIENT,    
   } from '../constants';
   
   // Added for Login
@@ -12,3 +13,15 @@ import {
       },
     };
   }
+
+
+  // Update Patient
+  export function updatePatient(patientDetails) {  
+    console.log("updatePatient",patientDetails)
+  return {
+    type: UPDATE_PATIENT,
+    payload: {
+      patientDetails
+    },
+  };
+}

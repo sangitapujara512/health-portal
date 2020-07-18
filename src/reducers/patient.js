@@ -1,4 +1,4 @@
-import { SET_PATIENT } from '../constants';
+import { SET_PATIENT,UPDATE_PATIENT } from '../constants';
 
 const initialState = { 
   patientList:[{
@@ -32,11 +32,19 @@ const initialState = {
 };
 
 export default function setBrowserInfo(state = initialState, action) {
-    console.log("action.payload",action.payload)
+   
   switch (action.type) {
      
     case SET_PATIENT:
     console.log("LOGIN SET",state)
+      return {
+        ...state,
+        patientList: [...state.patientList, action.payload.patientDetails[0]],
+        
+      };
+      case UPDATE_PATIENT: 
+      console.log("action.payload",action.payload)  
+      alert("update");  
       return {
         ...state,
         patientList: [...state.patientList, action.payload.patientDetails[0]],

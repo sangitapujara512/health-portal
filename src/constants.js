@@ -1,7 +1,9 @@
 
 const SET_LOGIN = 'SET_LOGIN';
 const SET_PATIENT = 'SET_PATIENT';
+const UPDATE_PATIENT = 'UPDATE_PATIENT';
 export {
         SET_LOGIN,
         SET_PATIENT,
+        UPDATE_PATIENT,
 }

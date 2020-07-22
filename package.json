@@ -17,6 +17,7 @@
     "react-scripts": "3.4.1",
     "react-toast-notifications": "^2.4.0",
     "redux": "^4.0.5",
+    "shortid": "^2.2.15",
     "yup": "^0.29.1"
   },
   "scripts": {

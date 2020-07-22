@@ -29,7 +29,7 @@ const loginSchema = Yup.object().shape({
     .required("Required")
 });
 
-class LoginForm extends React.Component {
+class LoginForm extends React.PureComponent {
 
     constructor(props){
         super(props);
@@ -41,22 +41,68 @@ class LoginForm extends React.Component {
     
 
   handleSubmit = (values, { setSubmitting }) => {
-    const obj=[{
-        "FirstName": "Sang",
-		"LastName": "Puj",
-        "Mobile": 1111111111,
-        "email": "john.doe@gmail.com",
-        "Medicine": ["Crocin", "Cough Syrup"],
-		"Diagnosys":["fever","throat pain"],
-		"Address" : "Street 1",
-		"City": "Mumbai",
-		"State":"Mah",
-		"Country":"India",
-		"Pincode": 400080,
-		},
+    // const obj=[{
+    //   "id": 2,
+    //     "FirstName": "Sang",
+		// "LastName": "Puj",
+    //     "Mobile": 1111111111,
+    //     "email": "john.doe@gmail.com",
+    //     "Medicine": ["Crocin", "Cough Syrup"],
+		// "Diagnosys":["fever","throat pain"],
+		// "Address" : "Street 1",
+		// "City": "Mumbai",
+		// "State":"Mah",
+		// "Country":"India",
+		// "Pincode": 400080,
+		// },
         
         
-    ]
+    // ]
+    const patientList=[{
+      "id": 1,
+      "FirstName": "John",
+      "LastName": "Doe",
+      "Mobile": 1111111111,
+      "email": "john.doe@gmail.com",
+      "Medicine": ["Crocin", "Cough Syrup"],
+      "Diagnosys":["fever","throat pain"],
+      "Address" : "Street 1",
+      "City": "Mumbai",
+      "State":"Mah",
+      "Country":"India",
+      "Pincode": 400080,
+      },
+      {
+        "id": 2,
+          "FirstName": "Ketty",
+          "LastName": "Thomson",
+          "Mobile": 2222222222,
+          "email": "Ketty.Thomson@gmail.com",
+          "Medicine": ["Domestal","Saridon"],
+          "Diagnosys":["Stomach upset", "Head ache"],
+          "Address" : "Street 2 ",
+          "City": "Mumbai",
+          "State":"Mah",
+          "Country":"India",
+          "Pincode": 400080,
+          },
+          {
+            "id": 3,
+              "FirstName": "Denis",
+              "LastName": "Penk",
+              "Mobile": 4444444444,
+              "email": "Denis.Penk@gmail.com",
+              "Medicine": ["Domestal","Saridon"],
+              "Diagnosys":["Stomach upset", "Head ache"],
+              "Address" : "Street 2 ",
+              "City": "Mumbai",
+              "State":"Mah",
+              "Country":"India",
+              "Pincode": 400080,
+              }
+
+      
+  ]
      if(values.password === 'Healthcare'){
          console.log("Admin")
          this.setState({
@@ -71,7 +117,7 @@ class LoginForm extends React.Component {
      }
     //  dispatch(setLogin("account","newValue"))
      this.props.setLogin(values.email,values.password);
-     this.props.setPatient(obj);
+     this.props.setPatient(patientList);
      setSubmitting(false);
     
     // setTimeout(() => {

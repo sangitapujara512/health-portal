@@ -13,15 +13,34 @@ import TableRow from '@material-ui/core/TableRow';
 import { borderBottom } from '@material-ui/system';
 import Modal from 'react-modal';
 import Update from './Update'
-import {updatePatient} from '../../actions/patientAction'
+import {setPatient,deletePatient,updatePatient,addPatient} from '../../actions/patientAction';
+import store from '../../store'
+import AddPatient from './AddPatient'
+import shortid from 'shortid';
+import Search from './Search'
+
+const elementStyle ={
+  border:'solid',
+  borderRadius:'10px',
+  position:'relative',
+  left:'10vh',
+  height:'3vh',
+  width:'20vh',
+  marginTop:'5vh',
+  marginBottom:'10vh'
+}
+
 
 class Doctor extends Component {
   constructor(){
     super()
     this.state={
       showModal: false,
+      showAddModal:false,
       updatedDetails:'',
       updated: "false",
+      search:null,
+      finalSet: ''      
     }
   }
 
@@ -31,6 +50,24 @@ class Doctor extends Component {
       showModal:true
     });
 
+  }
+  handleAdd=(e)=>{
+    this.setState({
+      showAddModal:true
+    });
+
+  }
+  handleDelete =(e)=>{
+    let  patientList=this.props && this.props.patient[0] && this.props.patient[0].patientList;
+    patientList= patientList[0];
+    console.log("delete",patientList);
+    const postDelete=patientList.filter((patient)=>{
+      console.log("patient",patient.id);
+      return patient.id !=e.id
+     
+    })
+    console.log("postDelete",postDelete);
+    this.props.deletePatient(postDelete)
   }
   afterOpenModal=()=>{
     this.setState({
@@ -43,35 +80,135 @@ class Doctor extends Component {
       showModal:false
     });
   }
+  closeAddModal=()=>{
+    this.setState({
+      showAddModal:false
+    });
+  }
 submit=(patientDetails)=>{
+  console.log("patientDetails",patientDetails);
+  
   this.setState({
     updated:"true",
     updatedDetails:patientDetails
   });
-  this.props.updatePatient(patientDetails)
+
+  let  patientList=this.props && this.props.patient[0] && this.props.patient[0].patientList;
+  patientList=patientList[0];
+    console.log("delete",patientList);
+    console.log("patientDetails",patientDetails);
+    const postUpdate=patientList.filter((patient)=>{
+      console.log("patient",patient);
+      return patient.id !=patientDetails[0].id
+     
+    })
+    console.log("postUpdate",postUpdate[0]);
+    const finalUpdated= [...postUpdate,patientDetails[0] ];
+   
+    console.log("finalUpdated",finalUpdated);
+    console.log("finalUpdated",finalUpdated);
+   
+    alert ("calling");
+     this.props.updatePatient(finalUpdated)
+     this.setState({finalSet:finalUpdated});
+    
  
   
 }
-// componentDidUpdate(prevState){
+add=()=>{
+  const key=shortid.generate()
+
+ const patientList=[{
+      "id": key,
+      "FirstName": key,
+      "LastName": "Doe",
+      "Mobile": 1111111111,
+      "email": "john.doe@gmail.com",
+      "Medicine": ["Crocin", "Cough Syrup"],
+      "Diagnosys":["fever","throat pain"],
+      "Address" : "Street 1",
+      "City": "Mumbai",
+      "State":"Mah",
+      "Country":"India",
+      "Pincode": 400080,
+      },
+  ]
+  console.log(patientList);
+  this.props.addPatient(patientList)
+
+  
+    
+ 
+  
+}
+
+// componentDidUpdate(prevProps){
+//   let patientlist = this.props && this.props.patient[0] && this.props.patient[0].patientList;
+//   patientlist= patientlist && patientlist[0];
 //   console.log("STATE",this.state);
  
-//   if(this.state.updatedthis.state.updated){
+//   if(this.prevProps && this.prevProps.patient[0] != this.props && this.props.patient[0]){
  
-//     console.log("update",this.state.updatedDetails)
+  
+//     console.log("PRP",this.props);
+//     console.log("check");
+//       // alert("updated");
 
-//     this.props.updatePatient(this.state.updatedDetails)
+//     //  this.props.updatePatient(patientlist)
     
 //   }
 
 // }
+// componentDidMount(){
+//   let patientlist = this.props && this.props.patient[0] && this.props.patient[0].patientList;
+//   patientlist= patientlist && patientlist[0];
+//   console.log("before mountpatientlist",this.props);
+//   this.setState({
+//     finalSet:patientlist
+//   },()=>{console.log("mount",this.state.finalSet)});
+// }
+static getDerivedStateFromProps(props, state) {
+    let patientlist = props && props.patient[0] && props.patient[0].patientList;
+  patientlist= patientlist && patientlist[0];
+console.log("patientlist",patientlist);
+
+  return { finalSet: patientlist };
+}
+// componentDidUpdate(prevState){
+//   // let patientlist = this.props && this.props.patient[0] && this.props.patient[0].patientList;
+//   // patientlist= patientlist && patientlist[0];
+//   // console.log("STATE",this.state);
+ 
+//   if(this.prevState && this.prevState.finalSet != this.state && this.state.finalSet){ 
+  
+//     console.log("PRP",this.state.finalSet);
+//     console.log("check");
+//       // alert("updated");
+
+//     //  this.props.updatePatient(patientlist)
+    
+//   }
+
+// }
+
+searchSpace=(event)=>{
+  let keyword = event.target.value;
+  this.setState({search:keyword})
+}
+
+
+
   render() {
-    const {showModal}=this.state
-    const patientlist = this.props && this.props.patient[0] && this.props.patient[0].patientList;
-    console.log("PROPS", patientlist);
+    const {showModal,showAddModal}=this.state
+    console.log("DOC",this.state.finalSet)
+    let patientlist = this.props && this.props.patient[0] && this.props.patient[0].patientList;
+    patientlist= patientlist && patientlist[0];
+    console.log("PROPS", patientlist && patientlist[0]);
     console.log("PROPS", this.props);
     return (
       <div>
         <Link to='/'>Go to Home </Link>
+       
         <>
         <Modal
           isOpen={showModal}
@@ -80,10 +217,27 @@ submit=(patientDetails)=>{
           // style={customStyles}
           contentLabel="Example Modal"
         >
-        <Update submit={this.submit}/>
+        <Update submit={this.submit} setPatient={this.props && this.props.setPatient}/>
           </Modal>
+
+           {/* <Modal
+          isOpen={showAddModal}
+          // onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeAddModal}
+          // style={customStyles}
+          contentLabel="Example Modal"
+        >
+        <AddPatient add={this.add}/>
+          </Modal> */}
+          
           <p style={{ textAlign: 'center', color: 'blue', fontWeight: 'bold' }}>Patient List</p>
-          <TableContainer style={{ padding: '20px' }}>
+          <div>
+            <Search/>
+         
+     
+      </div>
+          {/* <TableContainer style={{ padding: '20px' }} >
+          <button onClick={this.add} style={{height:"100px",width:"100px"}}>Add Patient</button>
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
@@ -98,11 +252,12 @@ submit=(patientDetails)=>{
                   <TableCell align="center">Country</TableCell>
                   <TableCell align="center">Pincode</TableCell>
                   <TableCell align="center">Update</TableCell>
+                  <TableCell align="center">Delete</TableCell>
 
                 </TableRow>
               </TableHead>
               <TableBody>
-                {patientlist.map((entry, j) => (
+                {patientlist && patientlist.map((entry, j) => (
                   <TableRow key={entry && entry.FirstName}>
                     <TableCell component="th" scope="row">
                       {entry && entry.FirstName}
@@ -137,12 +292,13 @@ submit=(patientDetails)=>{
                     <TableCell align="center">{entry && entry.State}</TableCell>
                     <TableCell align="center">{entry && entry.Country}</TableCell>
                     <TableCell align="center">{entry && entry.Pincode}</TableCell>
-                    <TableCell align="center"><button onClick={this.handleUpdate.bind(this, entry)}>Update</button></TableCell>
+                    <TableCell align="center"><button onClick={this.handleUpdate.bind(this, entry)} >Update</button></TableCell>
+                    <TableCell align="center"><button onClick={this.handleDelete.bind(this, entry)}>Delete</button></TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
-          </TableContainer>
+          </TableContainer> */}
         </>
       </div>
     )
@@ -156,6 +312,13 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updatePatient: (patientDetails) =>
   dispatch(updatePatient(patientDetails)),
+  setPatient: (patientDetails) =>
+  dispatch(setPatient(patientDetails)),
+  addPatient: (patientDetails) =>
+  dispatch(addPatient(patientDetails)),
+  deletePatient: (patientDetails) =>
+  dispatch(deletePatient(patientDetails)),
+  
 
 });
 export default connect(

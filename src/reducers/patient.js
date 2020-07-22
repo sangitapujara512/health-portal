@@ -38,15 +38,7 @@ export default function setBrowserInfo(state = initialState, action) {
         
       };
       case UPDATE_PATIENT: 
-      // console.log("action.payload",action.payload)  
-      // console.log("action.payload",action.payload)
-      // const abc={
-                
-      //   // patientList: [action.payload.patientDetails],
-      //   ...state,        
-      //   patientList: [action.payload.patientDetails],
-      // }
-      // console.log("abc",abc);
+      
       return {
                 
         // patientList: [action.payload.patientDetails],

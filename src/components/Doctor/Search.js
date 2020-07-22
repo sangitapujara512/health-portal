@@ -119,6 +119,51 @@ class Search extends Component {
 
   }
 
+  // Update
+  handleUpdate=(patientDetails)=>{
+
+    const patientUpdate={
+      "id": 1,
+      "FirstName": 1,
+      "LastName": "Doe",
+      "Mobile": 1111111111,
+      "email": "john.doe@gmail.com",
+      "Medicine": ["Crocin", "Cough Syrup"],
+      "Diagnosys":["fever","throat pain"],
+      "Address" : "Street 1",
+      "City": "Mumbai",
+      "State":"Mah",
+      "Country":"India",
+      "Pincode": 400080,
+      }
+    // console.log("patientDetails",patientDetails);
+    
+    // this.setState({
+    //   updated:"true",
+    //   updatedDetails:patientDetails
+    // });
+  
+    const patientList=this.props.patient[0]
+      console.log("delete",patientList);
+     
+      const postUpdate=patientList.filter((patient)=>{
+        console.log("patient",patient);
+        return patient.id !=patientUpdate.id
+       
+      })
+      console.log("postUpdate",postUpdate);
+      const finalUpdated= [...postUpdate,patientUpdate];
+     
+     
+     
+
+       this.props.updatePatient(finalUpdated)
+      //  this.setState({finalSet:finalUpdated});
+      
+   
+    
+  }
+
   render(){
   
     const patientList=this.props.patient[0]
@@ -211,6 +256,7 @@ class Search extends Component {
                     <TableCell component="th" scope="row">
                     {data.Pincode}
                     </TableCell>
+                    <TableCell align="center"><button onClick={this.handleUpdate.bind(this, data)} >Update</button></TableCell>
                   <TableCell align="center"><button onClick={this.handleDelete.bind(this, data)}>Delete</button></TableCell>
 
                     {/* <TableCell component="th" scope="row">

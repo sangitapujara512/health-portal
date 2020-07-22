@@ -9,6 +9,8 @@ import TableRow from '@material-ui/core/TableRow';
 import {setPatient,deletePatient,updatePatient,addPatient} from '../../actions/patientAction';
 import { connect } from 'react-redux';
 import shortid from 'shortid';
+import Modal from 'react-modal';
+import AddPatient from './AddPatient'
 
 import '../../../src/App.css';
 
@@ -18,7 +20,8 @@ class Search extends Component {
     super();
 
     this.state={
-      search:null
+      search:null,
+      showAddModal:false,
     };
   }
 
@@ -104,6 +107,19 @@ class Search extends Component {
        this.props.updatePatient(finalUpdated)
     
   }
+  // Modals
+  handleAdd=(e)=>{
+    this.setState({
+      showAddModal:true
+    });
+
+  }
+  closeAddModal=()=>{
+    this.setState({
+      showAddModal:false
+    });
+  }
+
 
   render(){
   
@@ -147,21 +163,23 @@ class Search extends Component {
                     </TableCell>
                     <TableCell component="th" scope="row">
                     {/* {data.Diagnosys} */}
-                    {data.Diagnosys && data.Diagnosys.map((item, j) => (
+                    {/* {data.Diagnosys && data.Diagnosys.map((item, j) => (
                         <TableCell component="th" scope="row" style={{ display: "grid", borderBottom: 'none', textAlign: 'center' }} key={j}>
                           {item}
                         </TableCell>
 
-                      ))}
+                      ))} */}
+                      {data.Diagnosys}
                     </TableCell>
                     <TableCell component="th" scope="row">
                     {/* {data.Medicine} */}
-                    {data.Medicine && data.Medicine.map((item, k) => (
+                    {/* {data.Medicine && data.Medicine.map((item, k) => (
                         <TableCell component="th" scope="row" style={{ display: "grid", borderBottom: 'none', textAlign: 'center' }} key={k}>
                           {item}
                         </TableCell>
 
-                      ))}
+                      ))} */}
+                       {data.Medicine}
                     </TableCell>
                     <TableCell component="th" scope="row">
                     {data.Address}
@@ -190,11 +208,22 @@ class Search extends Component {
 
     return (
       <div>
+        <Modal
+          isOpen={this.state.showAddModal}
+          // onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeAddModal}
+          // style={customStyles}
+          contentLabel="Example Modal"
+        >
+        <AddPatient closeAddModal={this.closeAddModal}/>
+        {/* <div>ADD</div> */}
+          </Modal>
       <input type="text" placeholder="Enter item to be searched" style={elementStyle} onChange={(e)=>this.searchSpace(e)} />
       <TableContainer style={{ padding: '20px' }} >         
             <Table aria-label="simple table">
               <TableHead>
-              <button onClick={this.add} style={{height:"50px",width:"50px"}}>Add Patient</button>
+              {/* <button onClick={this.add} style={{height:"50px",width:"50px"}}>Add Patient</button> */}
+              <button onClick={this.handleAdd} style={{height:"50px",width:"50px"}}>Add Patient</button>
       <TableRow>
                   <TableCell>Patient name</TableCell>
                   <TableCell align="center">Phone</TableCell>

@@ -63,7 +63,7 @@ import {
         
 
   });
-class AddPatient extends React.PureComponent {
+class UpdatePatient extends React.PureComponent {
 
     constructor(props){
         super(props);
@@ -76,22 +76,44 @@ class AddPatient extends React.PureComponent {
 
     // Handle form Submit
     handleSubmit = (values, { setSubmitting }) => {
-      const patientAdd = values;
+        let getId=''
+      const patientUpdate = values;
       const patientList=this.props.patient[0]
-      const key=shortid.generate()
-      values.id=key;
-      console.log("values",values.id);
+      
 
-      const finalAdd=[...patientList,patientAdd]
-        console.log("finalAdd",finalAdd);
+    //   const finalAdd=[...patientList,patientAdd]
+    //     console.log("finalAdd",finalAdd);
     
-    console.log(patientList);
-    this.props.addPatient(finalAdd)
+    // console.log(patientList);
+    // this.props.addPatient(finalAdd) 
 
       //  this.props.setLogin(values.email,values.password);
       //  this.props.setPatient(patientList);
+       
+
+
+
+      
+     
+      const postUpdate=patientList.filter((patient)=>{
+        console.log("patient",patient);
+        if(patient.id !=patientUpdate.id){
+            getId=patient.id;
+            return (patient.id !=patientUpdate.id)
+        }
+       
+       
+      })
+      console.log("postUpdate",postUpdate);
+      patientUpdate.id=getId;
+      const finalUpdated= [...postUpdate,patientUpdate];
+       this.props.updatePatient(finalUpdated)
+
        setSubmitting(false);
-      this.props.closeAddModal();
+      this.props.closeUpdateModal();
+
+
+
       
     };
 
@@ -112,8 +134,11 @@ class AddPatient extends React.PureComponent {
   //   "Pincode": 400080,
   //   }
 
-  render() { 
-    console.log("prop update",this.prop);  
+  render() {
+     const propsData =this.props &&  this.props.propsData ;
+     const fName=propsData.FirstName
+     console.log("propsData",fName)
+     
       
     return (
       
@@ -129,17 +154,17 @@ class AddPatient extends React.PureComponent {
               </button>
               <Formik
           initialValues={{ 
-          FirstName : "",
-          LastName : "",
-          Mobile : "",
-          email: "",
-          Medicine : "",
-          Diagnosys : "",
-          Address : "",
-          City : "",
-          State : "",
-          Country : "",
-          Pincode : "",         
+          FirstName : fName,
+          LastName : propsData.LastName,
+          Mobile : propsData.Mobile,
+          email: propsData.email,
+          Medicine : propsData.Medicine,
+          Diagnosys : propsData.Diagnosys,
+          Address : propsData.Address,
+          City : propsData.City,
+          State : propsData.State,
+          Country : propsData.Country,
+          Pincode : propsData.Pincode,         
         }}
           validationSchema={loginSchema}
           onSubmit={this.handleSubmit}
@@ -147,7 +172,7 @@ class AddPatient extends React.PureComponent {
           {({ isSubmitting }) => (
             <Form>
               <label>
-              FirstName: <Field type="text" name="FirstName" />
+              FirstName: <Field type="text" name="FirstName" values={propsData && propsData.FirstName}/>
                 <ErrorMessage name="FirstName" component="div" />
               </label>
               <label>
@@ -208,8 +233,8 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
   
-  addPatient: (patientDetails) =>
-  dispatch(addPatient(patientDetails)),
+  updatePatient: (patientDetails) =>
+  dispatch(updatePatient(patientDetails)),
   
   
 
@@ -217,5 +242,5 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddPatient);
+)(UpdatePatient);
 

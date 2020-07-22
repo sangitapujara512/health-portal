@@ -12,7 +12,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { borderBottom } from '@material-ui/system';
 import Modal from 'react-modal';
-import Update from './Update'
+// import Update from './UpdatePatient'
 import {setPatient,deletePatient,updatePatient,addPatient} from '../../actions/patientAction';
 import store from '../../store'
 import AddPatient from './AddPatient'
@@ -217,7 +217,7 @@ searchSpace=(event)=>{
           // style={customStyles}
           contentLabel="Example Modal"
         >
-        <Update submit={this.submit} setPatient={this.props && this.props.setPatient}/>
+        {/* <Update submit={this.submit} setPatient={this.props && this.props.setPatient}/> */}
           </Modal>
 
            {/* <Modal

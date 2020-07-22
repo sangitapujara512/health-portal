@@ -13,6 +13,7 @@ import Modal from 'react-modal';
 import AddPatient from './AddPatient'
 
 import '../../../src/App.css';
+import UpdatePatient from './UpdatePatient';
 
 class Search extends Component {
 
@@ -22,6 +23,8 @@ class Search extends Component {
     this.state={
       search:null,
       showAddModal:false,
+      propsData:'',
+      showUpdateModal: false,
     };
   }
 
@@ -78,42 +81,59 @@ class Search extends Component {
 
   // Update
   handleUpdate=(patientDetails)=>{
+    this.setState({
+      showUpdateModal: true,     
+      propsData:patientDetails,
 
-    const patientUpdate={
-      "id": 1,
-      "FirstName": 1,
-      "LastName": "Doe",
-      "Mobile": 1111111111,
-      "email": "john.doe@gmail.com",
-      "Medicine": ["Crocin", "Cough Syrup"],
-      "Diagnosys":["fever","throat pain"],
-      "Address" : "Street 1",
-      "City": "Mumbai",
-      "State":"Mah",
-      "Country":"India",
-      "Pincode": 400080,
-      }   
+    });
+    
+    // this.handleUpdateFlag();
+
+    // const patientUpdate={
+    //   "id": 1,
+    //   "FirstName": 1,
+    //   "LastName": "Doe",
+    //   "Mobile": 1111111111,
+    //   "email": "john.doe@gmail.com",
+    //   "Medicine": ["Crocin", "Cough Syrup"],
+    //   "Diagnosys":["fever","throat pain"],
+    //   "Address" : "Street 1",
+    //   "City": "Mumbai",
+    //   "State":"Mah",
+    //   "Country":"India",
+    //   "Pincode": 400080,
+    //   }   
   
-    const patientList=this.props.patient[0]
-      console.log("delete",patientList);
+    // const patientList=this.props.patient[0]
+    //   console.log("delete",patientList);
      
-      const postUpdate=patientList.filter((patient)=>{
-        console.log("patient",patient);
-        return patient.id !=patientUpdate.id
+    //   const postUpdate=patientList.filter((patient)=>{
+    //     console.log("patient",patient);
+    //     return patient.id !=patientUpdate.id
        
-      })
-      console.log("postUpdate",postUpdate);
-      const finalUpdated= [...postUpdate,patientUpdate];
-       this.props.updatePatient(finalUpdated)
+    //   })
+    //   console.log("postUpdate",postUpdate);
+    //   const finalUpdated= [...postUpdate,patientUpdate];
+    //    this.props.updatePatient(finalUpdated)
     
   }
   // Modals
   handleAdd=(e)=>{
+    console.log("this",e)
     this.setState({
-      showAddModal:true
+      showAddModal:true,
+      
+
     });
 
   }
+  closeUpdateModal=()=>{
+    console.log("close update");
+    this.setState({
+      showUpdateModal:false
+    });
+  }
+
   closeAddModal=()=>{
     this.setState({
       showAddModal:false
@@ -124,7 +144,7 @@ class Search extends Component {
   render(){
   
     const patientList=this.props.patient[0]
-    console.log("SER",patientList)
+    console.log("SER",this.state.propData)
     const styleInfo = {
       paddingRight:'10px'
     }
@@ -215,9 +235,25 @@ class Search extends Component {
           // style={customStyles}
           contentLabel="Example Modal"
         >
-        <AddPatient closeAddModal={this.closeAddModal}/>
+        <AddPatient closeAddModal={this.closeAddModal} propsData={this.state.propsData}/>
         {/* <div>ADD</div> */}
           </Modal>
+
+        {/* ************************************************** */}
+          {/* Update Modal */}
+
+          <Modal
+          isOpen={this.state.showUpdateModal}
+          // onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeUpdateModal}
+          // style={customStyles}
+          contentLabel="Example Modal"
+        >
+        <UpdatePatient closeUpdateModal={this.closeUpdateModal} propsData={this.state.propsData}/>
+        {/* <div>ADD</div> */}
+          </Modal>
+
+          
       <input type="text" placeholder="Enter item to be searched" style={elementStyle} onChange={(e)=>this.searchSpace(e)} />
       <TableContainer style={{ padding: '20px' }} >         
             <Table aria-label="simple table">

@@ -11,7 +11,7 @@ import {
     Link as Link,
   } from 'react-router-dom';
   import Patient from '../Patient'
-  import Doctor from '../Doctor'
+  // import PatientList from '../PatientList'
   import { withToastManager } from 'react-toast-notifications';
 
 
@@ -200,7 +200,7 @@ if(this.state.wrongPassword !== prevState.wrongPassword){
         return <Redirect to='/Patient' />;
       }   
       if (dloggedIn) {
-        return <Redirect to='/Doctor' />;
+        return <Redirect to='/patientlist' />;
       } 
     return (
       

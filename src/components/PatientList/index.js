@@ -31,7 +31,7 @@ const elementStyle ={
 }
 
 
-class Doctor extends Component {
+class PatientList extends Component {
   constructor(){
     super()
     this.state={
@@ -324,5 +324,5 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Doctor);
+)(PatientList);
 

@@ -75,7 +75,7 @@ class UpdatePatient extends React.PureComponent {
 
 
     // Handle form Submit
-    handleSubmit = (values, { setSubmitting }) => {
+    handleUpdateSubmit = (values, { setSubmitting }) => {
         const propsData =this.props &&  this.props.propsData ;
         values.id=propsData.id;
       const patientUpdate = values;
@@ -118,6 +118,28 @@ class UpdatePatient extends React.PureComponent {
       
     };
 
+    // Handle Add form Submit
+    handleAddSubmit = (values, { setSubmitting }) => {
+        const patientAdd = values;
+        const patientList=this.props.patient[0]
+        const key=shortid.generate()
+        values.id=key;
+        console.log("values",values.id);
+  
+        const finalAdd=[...patientList,patientAdd]
+          console.log("finalAdd",finalAdd);
+      
+      console.log(patientList);
+      this.props.addPatient(finalAdd)
+  
+        //  this.props.setLogin(values.email,values.password);
+        //  this.props.setPatient(patientList);
+         setSubmitting(false);
+        this.props.closeAddModal();
+        
+      };
+
+
     
 
  // const patientAdd={
@@ -136,7 +158,12 @@ class UpdatePatient extends React.PureComponent {
   //   }
 
   render() {
-     const propsData =this.props &&  this.props.propsData ;
+      const {operation}=this.props
+     
+     let propsData =this.props &&  this.props.propsData ;
+     if (operation === "add"){
+        propsData= "";
+     }
      const fName=propsData.FirstName
     //  console.log("propsData",fName)
      
@@ -150,9 +177,9 @@ class UpdatePatient extends React.PureComponent {
         <div style={{alignSelf:'center'}}>
         <Link to='/'>Go to Home </Link>
        
-        <button type="submit" onClick={this.handleSubmit}>
+        {/* <button type="submit" onClick={this.handleSubmit}>
                 Submit
-              </button>
+              </button> */}
               <Formik
           initialValues={{ 
           FirstName : fName,
@@ -168,7 +195,7 @@ class UpdatePatient extends React.PureComponent {
           Pincode : propsData.Pincode,         
         }}
           validationSchema={loginSchema}
-          onSubmit={this.handleSubmit}
+          onSubmit={operation === "update" ? this.handleUpdateSubmit: operation === "add" ? this.handleAddSubmit : ''}
         >
           {({ isSubmitting }) => (
             <Form>
@@ -239,6 +266,8 @@ const mapDispatchToProps = (dispatch) => ({
   
   updatePatient: (patientDetails) =>
   dispatch(updatePatient(patientDetails)),
+  addPatient: (patientDetails) =>
+  dispatch(addPatient(patientDetails)),
   
   
 

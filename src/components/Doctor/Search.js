@@ -236,7 +236,7 @@ class Search extends Component {
           // style={customStyles}
           contentLabel="Example Modal"
         >
-        <AddPatient closeAddModal={this.closeAddModal} propsData={this.state.propsData}/>
+        <UpdatePatient closeAddModal={this.closeAddModal} propsData={this.state.propsData} operation="add"/>
         {/* <div>ADD</div> */}
           </Modal>
 
@@ -250,7 +250,7 @@ class Search extends Component {
           // style={customStyles}
           contentLabel="Example Modal"
         >
-        <UpdatePatient closeUpdateModal={this.closeUpdateModal} propsData={this.state.propsData}/>
+        <UpdatePatient closeUpdateModal={this.closeUpdateModal} propsData={this.state.propsData} operation="update"/>
         {/* <div>ADD</div> */}
           </Modal>
 

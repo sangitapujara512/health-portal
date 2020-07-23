@@ -57,7 +57,7 @@ import {
     .min(6, "Enter 6 digits phone number")
     .max(6, "Enter 6 digits phone number")
     .matches(
-      /^[0-5]*$/ ,"Enter 6 digits phone number"),
+      /^[0-9]*$/ ,"Enter 6 digits phone number"),
 
 
         
@@ -219,6 +219,9 @@ class UpdatePatient extends React.PureComponent {
               </label>
               <button type="submit" disabled={isSubmitting}>
                 Submit
+              </button>
+              <button type="submit" disabled={isSubmitting} onClick={this.props.closeUpdateModal}>
+                Cancel
               </button>
             </Form>
           )}

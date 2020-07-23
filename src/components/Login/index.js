@@ -12,6 +12,7 @@ import {
   } from 'react-router-dom';
   import Patient from '../Patient'
   import Doctor from '../Doctor'
+  import { withToastManager } from 'react-toast-notifications';
 
 
 const loginSchema = Yup.object().shape({
@@ -34,8 +35,9 @@ class LoginForm extends React.PureComponent {
     constructor(props){
         super(props);
         this.state={
-            ploggedIn: false,
+            ploggedIn:false,
             dloggedIn:false,
+            wrongPassword:false,
            }
     }
     
@@ -103,28 +105,92 @@ class LoginForm extends React.PureComponent {
 
       
   ]
+
+  
      if(values.password === 'Healthcare'){
          console.log("Admin")
          this.setState({
             dloggedIn:true
         });
+        //  dispatch(setLogin("account","newValue"))
+     this.props.setLogin(values.email,values.password);
+     this.props.setPatient(patientList);
      }
      if(values.password === 'Password'){
         console.log("patient")
         this.setState({
             ploggedIn:true
         });
-     }
-    //  dispatch(setLogin("account","newValue"))
+        //  dispatch(setLogin("account","newValue"))
      this.props.setLogin(values.email,values.password);
      this.props.setPatient(patientList);
-     setSubmitting(false);
+     }
+     else {
+    this.setState({
+       wrongPassword:true
+   });}
+   
+
+     setSubmitting(false);  
+      
     
-    // setTimeout(() => {
-    //   alert(JSON.stringify(values, null, 2));
-    //   setSubmitting(false);
-    // }, 400);
   };
+  componentDidUpdate(props,prevState) {
+    this.toastManager = props.toastManager;
+    if(this.state.dloggedIn !== prevState.dloggedIn){
+      
+      if(this.state.dloggedIn){
+      this.toastManager.add("Doctor Login Success", {
+        appearance: 'success',
+        autoDismiss: true,
+      });
+    }
+  }
+
+  if(this.state.ploggedIn !== prevState.ploggedIn){
+      
+    if(this.state.ploggedIn){
+    this.toastManager.add("Patient Login Success", {
+      appearance: 'success',
+      autoDismiss: true,
+    });
+  }
+}
+
+if(this.state.wrongPassword !== prevState.wrongPassword){
+      
+  if(this.state.wrongPassword){
+  this.toastManager.add("Wrong Password Entered", {
+    appearance: 'warning',
+    autoDismiss: true,
+  });
+}
+}
+
+    // if(this.state.ploggedIn){
+    //   this.toastManager.add("Patient Login Success", {
+    //     appearance: 'success',
+    //     autoDismiss: true,
+    //   });
+    // }
+    // else {
+    //   {
+    //       this.toastManager.add("Wrong Password Entered", {
+    //         appearance: 'warning',
+    //         autoDismiss: true,
+    //       });
+    //     }
+    // }
+
+    // if(this.state.wrongPassword){
+    //   this.toastManager.add("Wrong Password Entered", {
+    //     appearance: 'warning',
+    //     autoDismiss: true,
+    //   });
+    // }
+
+    
+  }
 
   render() {   
        const {ploggedIn,dloggedIn}= this.state
@@ -185,6 +251,5 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(LoginForm);
-
+)(withToastManager(LoginForm));
 // export default LoginForm;

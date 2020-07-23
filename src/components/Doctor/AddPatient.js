@@ -57,7 +57,7 @@ import {
     .min(6, "Enter 6 digits phone number")
     .max(6, "Enter 6 digits phone number")
     .matches(
-      /^[0-5]*$/ ,"Enter 6 digits phone number"),
+      /^[0-9]*$/ ,"Enter 6 digits phone number"),
 
 
         
@@ -163,11 +163,11 @@ class AddPatient extends React.PureComponent {
                 <ErrorMessage name="email" component="div" />
               </label>
               <label>
-              Medicine: <Field type="text" name="Medicine" />
+              Medicine: <Field type="text" name="Medicine" placeholder="Enter space seperated values"/>
                 <ErrorMessage name="Medicine" component="div" />
               </label>
               <label>
-              Diagnosis: <Field type="text" name="Diagnosys" />
+              Diagnosis: <Field type="text" name="Diagnosys" placeholder="Enter space seperated values "/>
                 <ErrorMessage name="Diagnosys" component="div" />
               </label>
               <label>
@@ -193,6 +193,9 @@ class AddPatient extends React.PureComponent {
               </label>
               <button type="submit" disabled={isSubmitting}>
                 Submit
+              </button>
+              <button type="submit" disabled={isSubmitting} onClick={this.props.closeAddModal}>
+                Cancel
               </button>
             </Form>
           )}

@@ -81,6 +81,7 @@ class Search extends Component {
 
   // Update
   handleUpdate=(patientDetails)=>{
+    console.log("ID",patientDetails.id);
     this.setState({
       showUpdateModal: true,     
       propsData:patientDetails,
@@ -162,7 +163,7 @@ class Search extends Component {
         console.log("data",data);
       if(this.state.search == null)
           return data
-      else if(data.FirstName.toLowerCase().includes(this.state.search.toLowerCase()) || data.email.toLowerCase().includes(this.state.search.toLowerCase())){
+      else if(data.FirstName.toLowerCase().includes(this.state.search.toLowerCase()) || data.Medicine.toLowerCase().includes(this.state.search.toLowerCase())){
           return data
       }
     }).map(data=>{
@@ -173,7 +174,7 @@ class Search extends Component {
               <TableBody>                
                   <TableRow key={data.FirstName}>
                     <TableCell component="th" scope="row">
-                    {data.FirstName}
+                    {data.FirstName} {data.LastName}
                     </TableCell>
                     <TableCell component="th" scope="row">
                     {data.Mobile}

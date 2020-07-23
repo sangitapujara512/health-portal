@@ -76,8 +76,10 @@ class UpdatePatient extends React.PureComponent {
 
     // Handle form Submit
     handleSubmit = (values, { setSubmitting }) => {
-        let getId=''
+        const propsData =this.props &&  this.props.propsData ;
+        values.id=propsData.id;
       const patientUpdate = values;
+      console.log("patientUpdate",patientUpdate);
       const patientList=this.props.patient[0]
       
 
@@ -96,16 +98,15 @@ class UpdatePatient extends React.PureComponent {
       
      
       const postUpdate=patientList.filter((patient)=>{
-        console.log("patient",patient);
-        if(patient.id !=patientUpdate.id){
-            getId=patient.id;
+        // console.log("patient",patient);
+       
             return (patient.id !=patientUpdate.id)
-        }
+        
        
        
       })
       console.log("postUpdate",postUpdate);
-      patientUpdate.id=getId;
+    //   patientUpdate.id=getId;
       const finalUpdated= [...postUpdate,patientUpdate];
        this.props.updatePatient(finalUpdated)
 
@@ -137,7 +138,7 @@ class UpdatePatient extends React.PureComponent {
   render() {
      const propsData =this.props &&  this.props.propsData ;
      const fName=propsData.FirstName
-     console.log("propsData",fName)
+    //  console.log("propsData",fName)
      
       
     return (

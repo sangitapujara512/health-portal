@@ -10,7 +10,7 @@ import {
     Redirect,
     Link as Link,
   } from 'react-router-dom';
-  import Patient from '../Patient'
+  // import Patient from '../Patient'
   // import Doctor from '../Doctor'
   import {setPatient,deletePatient,updatePatient,addPatient} from '../../actions/patientAction';
   import shortid from 'shortid';

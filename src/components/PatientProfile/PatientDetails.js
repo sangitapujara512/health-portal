@@ -11,24 +11,21 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { borderBottom } from '@material-ui/system';
+
  
   
 
- function Patient(){
-  const patientDetails = useSelector((state) => state.patient.patientList[0]);
-  const userCredentials = useSelector((state) => state.login.login.email)
-
-  let result = patientDetails && patientDetails.filter(patient => patient.email === userCredentials);
-  let entry=result && result[0];
-  console.log("result",entry)
+ function PatientDetails({entry,showUpdate}){
+   if(!showUpdate){
+  alert("")
+   }
+  
+ 
   
 
   return (
    
-    <div>
-         <Link to='/'>Home </Link>
-         {result && result.length > 0 ? 
-     <TableContainer style={{ padding: '20px' }} >
+    <TableContainer style={{ padding: '20px' }} >
          
             <Table aria-label="simple table">
               <TableHead>
@@ -43,9 +40,7 @@ import { borderBottom } from '@material-ui/system';
                   <TableCell align="center">State</TableCell>
                   <TableCell align="center">Country</TableCell>
                   <TableCell align="center">Pincode</TableCell>
-                  <TableCell align="center">Update</TableCell>
-                  <TableCell align="center">Delete</TableCell>
-
+                 {showUpdate ==true &&  <TableCell align="center">Update</TableCell>}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -62,7 +57,7 @@ import { borderBottom } from '@material-ui/system';
 
                      
                         <TableCell component="th" scope="row" style={{ display: "grid", borderBottom: 'none', textAlign: 'center' }} >
-                          {/* {item} */}
+                        {entry && entry.Medicine}
                         </TableCell>
 
                      
@@ -73,7 +68,7 @@ import { borderBottom } from '@material-ui/system';
 
                     
                         <TableCell component="th" scope="row" style={{ display: "grid", borderBottom: 'none', textAlign: 'center' }} >
-                          {/* {item} */}
+                          {entry && entry.Diagnosys}
                         </TableCell>
 
                     
@@ -84,16 +79,14 @@ import { borderBottom } from '@material-ui/system';
                     <TableCell align="center">{entry && entry.State}</TableCell>
                     <TableCell align="center">{entry && entry.Country}</TableCell>
                     <TableCell align="center">{entry && entry.Pincode}</TableCell>
-                    <TableCell align="center"><button  >Update</button></TableCell>
+                    {showUpdate &&  <TableCell align="center">Update</TableCell>}
                    
                   </TableRow>
       
               </TableBody>
             </Table>
           </TableContainer>
-          : "Your record is not yet created"}
-    </div>
   )
 }
 
-export default Patient
+export default PatientDetails

@@ -11,6 +11,9 @@ import { connect } from 'react-redux';
 import shortid from 'shortid';
 import Modal from 'react-modal';
 import AddPatient from './AddPatient'
+import { 
+  Link 
+} from 'react-router-dom';
 
 import '../../../src/App.css';
 import UpdatePatient from './UpdatePatient';
@@ -217,6 +220,7 @@ class Search extends Component {
                     <TableCell component="th" scope="row">
                     {data.Pincode}
                     </TableCell>
+                    <TableCell align="center"><Link to={{pathname:'/patientprofile',viewProfileProps:{data:data}}}>View Profile</Link></TableCell>
                     <TableCell align="center"><button onClick={this.handleUpdate.bind(this, data)} >Update</button></TableCell>
                   <TableCell align="center"><button onClick={this.handleDelete.bind(this, data)}>Delete</button></TableCell>
                   </TableRow>                
@@ -272,6 +276,7 @@ class Search extends Component {
                   <TableCell align="center">State</TableCell>
                   <TableCell align="center">Country</TableCell>
                   <TableCell align="center">Pincode</TableCell>
+                  <TableCell align="center">View Profile</TableCell>
                   <TableCell align="center">Update</TableCell>
                   <TableCell align="center">Delete</TableCell>
                 </TableRow>

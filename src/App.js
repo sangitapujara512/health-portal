@@ -12,7 +12,7 @@ import {
   BrowserRouter,
 } from 'react-router-dom';
 import { ToastProvider } from 'react-toast-notifications';
-import Patient from './components/Patient'
+import PatientProfile from './components/PatientProfile'
 import PatientList from './components/PatientList'
 import Home from './components/Home'
 
@@ -25,7 +25,7 @@ function App() {
       <BrowserRouter>  
       <Route path='/' exact component={Home} />
       <Route path='/login' exact component={Login} />      
-      <Route path='/patient' exact component={Patient} />
+      <Route path='/patientprofile' exact component={PatientProfile} />
       <Route path='/patientlist' exact component={PatientList} />
       </BrowserRouter>
       </ToastProvider>

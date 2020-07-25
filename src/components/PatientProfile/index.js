@@ -1,4 +1,4 @@
-import React ,{useEffect} from 'react'
+import React from 'react'
 import {
     Redirect,
     Link as Link,
@@ -12,11 +12,16 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { borderBottom } from '@material-ui/system';
 import PatientDetails from './PatientDetails'
+import { useDispatch } from 'react-redux'
+
+import {setLogin} from '../../actions/loginAction'
  
   
 
  function PatientProfile(props){
   const patientDetails = useSelector((state) => state.patient.patientList[0]);
+  const getRole = useSelector((state) => state.login && state.login.login && state.login.login.role)
+  // console.log("ROLE",state.login);
   const userCredentials = useSelector((state) => state.login.login.email)
 
   let result = patientDetails && patientDetails.filter(patient => patient.email === userCredentials);
@@ -25,10 +30,17 @@ import PatientDetails from './PatientDetails'
   console.log("props location",props);
   const viewProfiledata=props.location && props.location.viewProfileProps && props.location.viewProfileProps.data;
   console.log(viewProfiledata);
+  const dispatch=useDispatch();
+  const logout=()=>{
+    dispatch(setLogin('','',''));
+  }
 
   return (   
     <div>
-         <Link to='/'>Home </Link>
+         <Link to='/'>Home1 </Link>
+         <Link to='/' style={{padding:'20px'}} onClick={logout}>
+                     Logout
+                    </Link>
          {result && result.length > 0 ? 
      <PatientDetails entry ={entry} showUpdate={true}/> 
           : viewProfiledata && viewProfiledata.id !== '' ? <PatientDetails entry ={viewProfiledata} showUpdate={false}/>: "Your record is not yet created"}

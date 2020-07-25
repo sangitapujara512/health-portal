@@ -18,6 +18,7 @@ import store from '../../store'
 import AddPatient from './AddPatient'
 import shortid from 'shortid';
 import Search from './Search'
+import {setLogin} from '../../actions/loginAction'
 
 const elementStyle ={
   border:'solid',
@@ -195,12 +196,16 @@ searchSpace=(event)=>{
   let keyword = event.target.value;
   this.setState({search:keyword})
 }
+logout=()=>{
+  this.props.setLogin(setLogin('','',''));
+}
 
 
 
   render() {
     const {showModal,showAddModal}=this.state
-    console.log("DOC",this.state.finalSet)
+    const getRole = this.props && this.props.login[0] && this.props.login[0].login.role;
+    console.log("DOC",getRole)
     let patientlist = this.props && this.props.patient[0] && this.props.patient[0].patientList;
     patientlist= patientlist && patientlist[0];
     console.log("PROPS", patientlist && patientlist[0]);
@@ -208,6 +213,9 @@ searchSpace=(event)=>{
     return (
       <div>
         <Link to='/'>Go to Home </Link>
+        {getRole && getRole === 'doctor' || getRole && getRole === 'patient' ? <Link to='/' style={{padding:'20px'}} onClick={this.logout}>
+                     Logout
+                    </Link>:''}
        
         <>
         <Modal
@@ -308,8 +316,11 @@ searchSpace=(event)=>{
 
 const mapStateToProps = (state) => ({
   patient: [state.patient],
+  login:[state.login]
 });
 const mapDispatchToProps = (dispatch) => ({
+  setLogin: (email,password,role) =>
+        dispatch(setLogin(email,password,role)),
   updatePatient: (patientDetails) =>
   dispatch(updatePatient(patientDetails)),
   setPatient: (patientDetails) =>

@@ -15,6 +15,7 @@ import { ToastProvider } from 'react-toast-notifications';
 import PatientProfile from './components/PatientProfile'
 import PatientList from './components/PatientList'
 import Home from './components/Home'
+import ComponentNotFound from './components/ComponentNotFound'
 
 function App() {
   console.log("store",store.getState());
@@ -22,11 +23,14 @@ function App() {
     <div className="App">
       <Provider store={store}>
       <ToastProvider>
-      <BrowserRouter>  
+      <BrowserRouter>
+      <Switch>  
       <Route path='/' exact component={Home} />
       <Route path='/login' exact component={Login} />      
       <Route path='/patientprofile' exact component={PatientProfile} />
       <Route path='/patientlist' exact component={PatientList} />
+      <Route path='*' component={ComponentNotFound} />
+      </Switch>
       </BrowserRouter>
       </ToastProvider>
       </Provider>

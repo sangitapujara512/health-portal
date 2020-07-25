@@ -43,23 +43,7 @@ class LoginForm extends React.PureComponent {
     
 
   handleSubmit = (values, { setSubmitting }) => {
-    // const obj=[{
-    //   "id": 2,
-    //     "FirstName": "Sang",
-		// "LastName": "Puj",
-    //     "Mobile": 1111111111,
-    //     "email": "john.doe@gmail.com",
-    //     "Medicine": ["Crocin", "Cough Syrup"],
-		// "Diagnosys":["fever","throat pain"],
-		// "Address" : "Street 1",
-		// "City": "Mumbai",
-		// "State":"Mah",
-		// "Country":"India",
-		// "Pincode": 400080,
-		// },
-        
-        
-    // ]
+    const changedPassword=sessionStorage.getItem("password");
     const patientList=[{
       "id": 1,
       "FirstName": "John",
@@ -112,19 +96,31 @@ class LoginForm extends React.PureComponent {
          this.setState({
             dloggedIn:true
         });
+        values.role="doctor"
         //  dispatch(setLogin("account","newValue"))
-     this.props.setLogin(values.email,values.password);
+     this.props.setLogin(values.email,values.password,values.role);
      this.props.setPatient(patientList);
      }
-     if(values.password === 'Password'){
+     if(values.password === changedPassword){
         console.log("patient")
         this.setState({
             ploggedIn:true
         });
+        values.role="patient"
         //  dispatch(setLogin("account","newValue"))
-     this.props.setLogin(values.email,values.password);
+     this.props.setLogin(values.email,values.password,values.role);
      this.props.setPatient(patientList);
      }
+     if(values.password === "Password"){
+      console.log("patient")
+      this.setState({
+          ploggedIn:true
+      });
+      values.role="patient"
+      //  dispatch(setLogin("account","newValue"))
+   this.props.setLogin(values.email,values.password,values.role);
+   this.props.setPatient(patientList);
+   }
      else {
     this.setState({
        wrongPassword:true
@@ -243,8 +239,8 @@ const mapStateToProps = (state) => ({
     credentials: [state],
 });
 const mapDispatchToProps = (dispatch) => ({
-    setLogin: (email,password) =>
-        dispatch(setLogin(email,password)),
+    setLogin: (email,password,role) =>
+        dispatch(setLogin(email,password,role)),
         setPatient: (patientDetails) =>
         dispatch(setPatient(patientDetails)),
 });

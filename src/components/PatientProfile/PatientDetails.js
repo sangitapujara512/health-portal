@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import {
     Redirect,
     Link as Link,
@@ -11,22 +11,38 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { borderBottom } from '@material-ui/system';
+import Modal from 'react-modal';
+import UpdatePassword from '../Login/UpdatePassword'
 
  
   
 
  function PatientDetails({entry,showUpdate}){
-   if(!showUpdate){
-  alert("")
-   }
+  
   
  
-  
+  const getEmail = useSelector((state) => state.login && state.login.login && state.login.login.email)
 
+const [showModal,setShowModal]=useState(false)
+const [email,setEmail]=useState(getEmail)
+const handleUpdatePassword=()=>{
+  setShowModal(true);
+
+}
+const closeUpdateModal=()=>{
+  setShowModal(false);
+
+}
   return (
-   
-    <TableContainer style={{ padding: '20px' }} >
-         
+    <div>
+    <Modal
+    isOpen={showModal}    
+    onRequestClose={closeUpdateModal}    
+    contentLabel="Example Modal"  >
+  <UpdatePassword closeUpdateModal={closeUpdateModal} email={email}/>
+  
+    </Modal>
+    <TableContainer style={{ padding: '20px' }} >         
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
@@ -79,13 +95,14 @@ import { borderBottom } from '@material-ui/system';
                     <TableCell align="center">{entry && entry.State}</TableCell>
                     <TableCell align="center">{entry && entry.Country}</TableCell>
                     <TableCell align="center">{entry && entry.Pincode}</TableCell>
-                    {showUpdate &&  <TableCell align="center">Update</TableCell>}
+                    {showUpdate &&  <TableCell align="center" onClick={handleUpdatePassword}>Update Password</TableCell>}
                    
                   </TableRow>
       
               </TableBody>
             </Table>
           </TableContainer>
+          </div>
   )
 }
 

@@ -6,15 +6,12 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {setPatient,deletePatient,updatePatient,addPatient} from '../../actions/patientAction';
+import {deletePatient,updatePatient,addPatient} from '../../actions/patientAction';
 import { connect } from 'react-redux';
-import shortid from 'shortid';
 import Modal from 'react-modal';
-import AddPatient from './AddPatient'
 import { 
   Link 
 } from 'react-router-dom';
-
 import '../../../src/App.css';
 import UpdatePatient from './UpdatePatient';
 
@@ -34,105 +31,39 @@ class Search extends Component {
   searchSpace=(event)=>{
     let keyword = event.target.value;
     this.setState({search:keyword})
-  }
+  }  
 
-  // Add
-  add=()=>{
-    const patientList=this.props.patient[0]
-    console.log("delete",patientList);
-    const key=shortid.generate()
-  
-   const patientAdd={
-        "id": key,
-        "FirstName": key,
-        "LastName": "Doe",
-        "Mobile": 1111111111,
-        "email": "john.doe@gmail.com",
-        "Medicine": ["Crocin", "Cough Syrup"],
-        "Diagnosys":["fever","throat pain"],
-        "Address" : "Street 1",
-        "City": "Mumbai",
-        "State":"Mah",
-        "Country":"India",
-        "Pincode": 400080,
-        }
-
-        const finalAdd=[...patientList,patientAdd]
-        console.log("finalAdd",finalAdd);
-    
-    console.log(patientList);
-    this.props.addPatient(finalAdd)
-  }
-
-  // Delete
+  // Delete the id from the array using filter method
 
   handleDelete =(e)=>{
     const patientList=this.props.patient[0]
-    console.log("delete",patientList);
+    
     const postDelete=patientList.filter((patient)=>{
-      console.log("patient",patient.id);
-      return patient.id !=e.id
-     
+      
+      return patient.id !=e.id     
     })
-    console.log("postDelete",postDelete);
+    
     this.props.deletePatient(postDelete)
-
-
-
-
   }
 
   // Update
   handleUpdate=(patientDetails)=>{
-    console.log("ID",patientDetails.id);
+    
     this.setState({
       showUpdateModal: true,     
       propsData:patientDetails,
-
     });
-    
-    // this.handleUpdateFlag();
-
-    // const patientUpdate={
-    //   "id": 1,
-    //   "FirstName": 1,
-    //   "LastName": "Doe",
-    //   "Mobile": 1111111111,
-    //   "email": "john.doe@gmail.com",
-    //   "Medicine": ["Crocin", "Cough Syrup"],
-    //   "Diagnosys":["fever","throat pain"],
-    //   "Address" : "Street 1",
-    //   "City": "Mumbai",
-    //   "State":"Mah",
-    //   "Country":"India",
-    //   "Pincode": 400080,
-    //   }   
-  
-    // const patientList=this.props.patient[0]
-    //   console.log("delete",patientList);
-     
-    //   const postUpdate=patientList.filter((patient)=>{
-    //     console.log("patient",patient);
-    //     return patient.id !=patientUpdate.id
-       
-    //   })
-    //   console.log("postUpdate",postUpdate);
-    //   const finalUpdated= [...postUpdate,patientUpdate];
-    //    this.props.updatePatient(finalUpdated)
-    
   }
+
   // Modals
   handleAdd=(e)=>{
-    console.log("this",e)
+    
     this.setState({
       showAddModal:true,
-      
-
     });
-
   }
-  closeUpdateModal=()=>{
-    console.log("close update");
+
+  closeUpdateModal=()=>{    
     this.setState({
       showUpdateModal:false
     });
@@ -144,11 +75,9 @@ class Search extends Component {
     });
   }
 
-
-  render(){
-  
+  render(){  
     const patientList=this.props.patient[0]
-    console.log("SER",this.state.propData)
+    
     const styleInfo = {
       paddingRight:'10px'
     }
@@ -163,7 +92,7 @@ class Search extends Component {
       marginBottom:'10vh'
     }
     const items = patientList && patientList.filter((data)=>{
-        console.log("data",data);
+        
       if(this.state.search == null)
           return data
       else if(data.FirstName.toLowerCase().includes(this.state.search.toLowerCase()) || data.Medicine.toLowerCase().includes(this.state.search.toLowerCase())){
@@ -185,24 +114,10 @@ class Search extends Component {
                     <TableCell component="th" scope="row">
                     {data.email}
                     </TableCell>
-                    <TableCell component="th" scope="row">
-                    {/* {data.Diagnosys} */}
-                    {/* {data.Diagnosys && data.Diagnosys.map((item, j) => (
-                        <TableCell component="th" scope="row" style={{ display: "grid", borderBottom: 'none', textAlign: 'center' }} key={j}>
-                          {item}
-                        </TableCell>
-
-                      ))} */}
+                    <TableCell component="th" scope="row">                   
                       {data.Diagnosys}
                     </TableCell>
-                    <TableCell component="th" scope="row">
-                    {/* {data.Medicine} */}
-                    {/* {data.Medicine && data.Medicine.map((item, k) => (
-                        <TableCell component="th" scope="row" style={{ display: "grid", borderBottom: 'none', textAlign: 'center' }} key={k}>
-                          {item}
-                        </TableCell>
-
-                      ))} */}
+                    <TableCell component="th" scope="row">                    
                        {data.Medicine}
                     </TableCell>
                     <TableCell component="th" scope="row">
@@ -233,6 +148,8 @@ class Search extends Component {
 
     return (
       <div>
+         {/* Add Modal Reuse UpdatePatient for add operation based on props */}
+         
         <Modal
           isOpen={this.state.showAddModal}
           // onAfterOpen={this.afterOpenModal}
@@ -245,7 +162,8 @@ class Search extends Component {
           </Modal>
 
         {/* ************************************************** */}
-          {/* Update Modal */}
+
+          {/* Update Modal Reuse UpdatePatient for update operation based on props */}
 
           <Modal
           isOpen={this.state.showUpdateModal}
@@ -262,8 +180,7 @@ class Search extends Component {
       <input type="text" placeholder="Enter item to be searched" style={elementStyle} onChange={(e)=>this.searchSpace(e)} />
       <TableContainer style={{ padding: '20px' }} >         
             <Table aria-label="simple table">
-              <TableHead>
-              {/* <button onClick={this.add} style={{height:"50px",width:"50px"}}>Add Patient</button> */}
+              <TableHead>              
               <button onClick={this.handleAdd} style={{height:"50px",width:"50px"}}>Add Patient</button>
       <TableRow>
                   <TableCell>Patient name</TableCell>
@@ -296,13 +213,12 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updatePatient: (patientDetails) =>
   dispatch(updatePatient(patientDetails)),
-  setPatient: (patientDetails) =>
-  dispatch(setPatient(patientDetails)),
+  // setPatient: (patientDetails) =>
+  // dispatch(setPatient(patientDetails)),
   addPatient: (patientDetails) =>
   dispatch(addPatient(patientDetails)),
   deletePatient: (patientDetails) =>
-  dispatch(deletePatient(patientDetails)),
-  
+  dispatch(deletePatient(patientDetails)), 
 
 });
 export default connect(

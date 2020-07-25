@@ -1,48 +1,44 @@
 import React from 'react'
 import {
-    Redirect,
-    Link as Link,
-  } from 'react-router-dom';
-  import { useSelector,useDispatch } from 'react-redux'
-  import {setLogin} from '../../actions/loginAction'
+  Link as Link,
+} from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
+import { setLogin } from '../../actions/loginAction'
 
 const Home = () => {
-    const clickHandler =()=>{
-        console.log("clickHandler");
-    }
-    const getRole = useSelector((state) => state.login && state.login.login && state.login.login.role)
-    const getEmail = useSelector((state) => state.login && state.login.login && state.login.login.email)
-    const dispatch=useDispatch();
-    console.log("PROP login",getRole);
-    const logout=()=>{
-      dispatch(setLogin('','',''));
-    }
-  return (     
-    // <div>        
-    //   Welcome to Healthcare Portal
-    <div style={{display:'flex'}}>
-      {/* <Link to='/login'style={{padding:'20px'}}>
-                        Login
-                      </Link> */}
-                      {(getRole === undefined || getRole == '') && <Link to='/login'style={{padding:'20px'}}>
-                        Login
+
+  // Get login details
+  const getLogin = useSelector((state) => state.login && state.login.login)
+  const getRole = getLogin && getLogin.role;
+  const getEmail = getLogin && getLogin.email;
+
+  const dispatch = useDispatch();
+
+  // On logout setLogin to null
+  const logout = () => {
+    dispatch(setLogin('', '', ''));
+  }
+  return (
+    <div>
+      <p style={{ textAlign: 'center' }}> Welcome to Healthcare Portal</p>
+      <div style={{ display: 'flex' }}>
+        {(getRole === undefined || getRole == '') && <Link to='/login' style={{ padding: '20px' }}>
+          Login
                       </Link>}
-                    {getRole && getRole === 'patient' && <Link to='/patientprofile'style={{padding:'20px'}}>
-                      My Profile
+        {/* If patient logged in then only show My profile */}
+        {getRole && getRole === 'patient' && <Link to='/patientprofile' style={{ padding: '20px' }}>
+          My Profile
                     </Link>}
-                    {getRole && getRole === 'doctor' && <Link to='/patientlist'style={{padding:'20px'}}>
-                     patientlist
+        {/* If Doctor logged in then only show patientlist */}
+        {getRole && getRole === 'doctor' && <Link to='/patientlist' style={{ padding: '20px' }}>
+          patientlist
                     </Link>}
-                    
-                    {getRole && getRole === 'doctor' || getRole && getRole === 'patient' && getEmail !== ''? <Link to='/' style={{padding:'20px'}} onClick={logout}>
-                     Logout
-                    </Link>:''}
-                    
-                    </div>
-     
-    // </div>
-   
-    
+        {/* If Doctor or patient logged in then only show Logout link */}
+        {getRole && getRole === 'doctor' || getRole && getRole === 'patient' && getEmail !== '' ? <Link to='/' style={{ padding: '20px' }} onClick={logout}>
+          Logout
+                    </Link> : ''}
+      </div>
+    </div>
   )
 }
 

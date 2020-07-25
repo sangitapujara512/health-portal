@@ -5,16 +5,13 @@ import "./styles.css";
 import {connect} from 'react-redux'
 import {setLogin} from '../../actions/loginAction'
 import {setPatient} from '../../actions/patientAction'
-import store from '../../store'
 import {
     Redirect,
     Link as Link,
-  } from 'react-router-dom';
-  // import Patient from '../Patient'
-  // import PatientList from '../PatientList'
+  } from 'react-router-dom';  
   import { withToastManager } from 'react-toast-notifications';
 
-
+// Validations added 
 const loginSchema = Yup.object().shape({
   password: Yup.string()
     .min(8, "Too Short!")
@@ -31,7 +28,6 @@ const loginSchema = Yup.object().shape({
 });
 
 class LoginForm extends React.PureComponent {
-
     constructor(props){
         super(props);
         this.state={
@@ -43,7 +39,11 @@ class LoginForm extends React.PureComponent {
     
 
   handleSubmit = (values, { setSubmitting }) => {
+
+    // If patient has changed logged in then get changed password from sessionStorage
     const changedPassword=sessionStorage.getItem("password");
+
+    // Data to be set initially on login
     const patientList=[{
       "id": 1,
       "FirstName": "John",
@@ -90,9 +90,9 @@ class LoginForm extends React.PureComponent {
       
   ]
 
-  
+    // If doctor logged in 
      if(values.password === 'Healthcare'){
-         console.log("Admin")
+         
          this.setState({
             dloggedIn:true
         });
@@ -101,38 +101,41 @@ class LoginForm extends React.PureComponent {
      this.props.setLogin(values.email,values.password,values.role);
      this.props.setPatient(patientList);
      }
+
+    //  if patient logged in , if already password changed then check with updated password
      if(changedPassword && values.password === changedPassword){
-        console.log("patient")
+        
         this.setState({
             ploggedIn:true
         });
-        values.role="patient"
-        //  dispatch(setLogin("account","newValue"))
+        values.role="patient"        
      this.props.setLogin(values.email,values.password,values.role);
      this.props.setPatient(patientList);
      }
+    //  If password not changed for patient then check if password is "Password"
      else if(!changedPassword && values.password === "Password"){
-      console.log("patient")
+      
       this.setState({
           ploggedIn:true
       });
       values.role="patient"
-      //  dispatch(setLogin("account","newValue"))
+      
    this.props.setLogin(values.email,values.password,values.role);
    this.props.setPatient(patientList);
    }
+  //  If wrong password entered
      else {
     this.setState({
        wrongPassword:true
-   });}
-   
+   });}   
 
-     setSubmitting(false);  
-      
-    
+     setSubmitting(false);
   };
+
   componentDidUpdate(props,prevState) {
     this.toastManager = props.toastManager;
+
+    // Show notifications based on the login status
     if(this.state.dloggedIn !== prevState.dloggedIn){
       
       if(this.state.dloggedIn){
@@ -162,51 +165,27 @@ if(this.state.wrongPassword !== prevState.wrongPassword){
   });
 }
 }
-
-    // if(this.state.ploggedIn){
-    //   this.toastManager.add("Patient Login Success", {
-    //     appearance: 'success',
-    //     autoDismiss: true,
-    //   });
-    // }
-    // else {
-    //   {
-    //       this.toastManager.add("Wrong Password Entered", {
-    //         appearance: 'warning',
-    //         autoDismiss: true,
-    //       });
-    //     }
-    // }
-
-    // if(this.state.wrongPassword){
-    //   this.toastManager.add("Wrong Password Entered", {
-    //     appearance: 'warning',
-    //     autoDismiss: true,
-    //   });
-    // }
-
     
   }
 
   render() {   
-       const {ploggedIn,dloggedIn}= this.state
+       const {ploggedIn,dloggedIn}= this.state;
 
-       console.log("PROPS",store.getState())
+      //  redirect patient to patientprofile
        if (ploggedIn) {
         return <Redirect to='/patientprofile' />;
-      }   
+      }
+      //  redirect doctor to patientlist   
       if (dloggedIn) {
         return <Redirect to='/patientlist' />;
       } 
     return (
-      
-
       <>
-        
-        
         <div style={{alignSelf:'center'}}>
         <Link to='/'>Go to Home </Link>
         <h1>Login</h1>
+
+        {/* Login form  */}
         <Formik
           initialValues={{ email: "", password: "" }}
           validationSchema={loginSchema}
@@ -248,4 +227,4 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(withToastManager(LoginForm));
-// export default LoginForm;
+

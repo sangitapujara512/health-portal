@@ -1,48 +1,31 @@
-import { SET_PATIENT,UPDATE_PATIENT,DELETE_PATIENT,ADD_PATIENT } from '../constants';
+import { SET_PATIENT, UPDATE_PATIENT, DELETE_PATIENT, ADD_PATIENT } from '../constants';
 
-const initialState = { 
-  patientList:[   
-]
+const initialState = {
+  patientList: [
+  ]
 };
 
 export default function setBrowserInfo(state = initialState, action) {
-   
+
   switch (action.type) {
-     
     case SET_PATIENT:
-    console.log("SET_PATIENT",action)
-    console.log("SET_PATIENT",action)
-    
       return {
         ...state,
-        // patientList: [...state.patientList, action.payload.patientDetails],
-          patientList: [...state.patientList, action.payload.patientDetails],
-        
+        patientList: [...state.patientList, action.payload.patientDetails],
       };
-      case ADD_PATIENT:
-    
-    console.log("ADD red",action.payload.patientDetails)
-    const abc= action.payload.patientDetails[0];
-    
+    case ADD_PATIENT:
       return {
         ...state,
         patientList: [action.payload.patientDetails],
-        // patientList: [action.payload.patientDetails[0]],
-        
       };
-      case DELETE_PATIENT:
-    console.log("DELE",action.payload.patientDetails)
+    case DELETE_PATIENT:
       return {
         ...state,
         patientList: [action.payload.patientDetails],
-        
       };
-      case UPDATE_PATIENT: 
-      
+    case UPDATE_PATIENT:
       return {
-                
-        // patientList: [action.payload.patientDetails],
-        ...state,        
+        ...state,
         patientList: [action.payload.patientDetails],
       };
     default:

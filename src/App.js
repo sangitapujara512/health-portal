@@ -1,14 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Login from './components/Login'
 import store from './store'
 import { Provider } from 'react-redux';
-import { Form, Field } from 'formik'
 import {
   Route,
-  Switch,
-  Redirect,
+  Switch,  
   BrowserRouter,
 } from 'react-router-dom';
 import { ToastProvider } from 'react-toast-notifications';
@@ -17,8 +14,7 @@ import PatientList from './components/PatientList'
 import Home from './components/Home'
 import ComponentNotFound from './components/ComponentNotFound'
 
-function App() {
-  console.log("store",store.getState());
+function App() {  
   return (
     <div className="App">
       <Provider store={store}>

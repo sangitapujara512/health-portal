@@ -101,7 +101,7 @@ class LoginForm extends React.PureComponent {
      this.props.setLogin(values.email,values.password,values.role);
      this.props.setPatient(patientList);
      }
-     if(values.password === changedPassword){
+     if(changedPassword && values.password === changedPassword){
         console.log("patient")
         this.setState({
             ploggedIn:true
@@ -111,7 +111,7 @@ class LoginForm extends React.PureComponent {
      this.props.setLogin(values.email,values.password,values.role);
      this.props.setPatient(patientList);
      }
-     if(values.password === "Password"){
+     else if(!changedPassword && values.password === "Password"){
       console.log("patient")
       this.setState({
           ploggedIn:true

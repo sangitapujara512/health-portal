@@ -70,17 +70,21 @@ class UpdatePassword extends React.PureComponent {
     constructor(props){
         super(props);
         this.state={
-            ploggedIn:false,
-            dloggedIn:false,
-            wrongPassword:false,
+            // ploggedIn:false,
+            // dloggedIn:false,
+            // wrongPassword:false,
+            passwordChanged:false
            }
     }
     
 
   handleSubmit = (values, { setSubmitting }) => {
     sessionStorage.setItem("password", values.password);
-     this.props.setLogin(values.email,values.password,values.role);
+    this.props.setLogin(values.email,values.password,values.role);
      setSubmitting(false);
+     this.setState({
+      passwordChanged: true
+     })
      this.props.closeUpdateModal();
   };
 //   componentDidUpdate(props,prevState) {
@@ -121,10 +125,13 @@ class UpdatePassword extends React.PureComponent {
 //   }
 handleChange=()=>{}
 
-  render() {   
+  render() {  
+    const {passwordChanged} =this.state
     console.log("cred",this.props);
     const email=this.props.email;
-       
+    if (passwordChanged) {
+      return <Redirect to='/' />;
+    }   
     return (
       
 

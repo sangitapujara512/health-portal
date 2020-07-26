@@ -78,7 +78,7 @@ function PatientDetails({ entry, showUpdate }) {
               <TableCell align="center">{entry && entry.State}</TableCell>
               <TableCell align="center">{entry && entry.Country}</TableCell>
               <TableCell align="center">{entry && entry.Pincode}</TableCell>              
-              {showUpdate && <TableCell align="center" ><button onClick={handleUpdatePassword}>Update Password</button></TableCell>}
+              {showUpdate && <TableCell align="center" ><button onClick={handleUpdatePassword} className="customButton">Update Password</button></TableCell>}
             </TableRow>
           </TableBody>
         </Table>

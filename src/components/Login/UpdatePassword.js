@@ -104,20 +104,20 @@ class UpdatePassword extends React.PureComponent {
             {({ isSubmitting }) => (
               <Form>
                 <label>
-                  Email: <Field type="email" name="email" onChange={this.handleChange} />
-                  <ErrorMessage name="email" component="div" />
+                  Email: <Field type="email" name="email" onChange={this.handleChange} className='text-format'/>
+                  <ErrorMessage name="email" component="div" className='errorStyle'/>
                 </label>
                 <label>
                   Password:
-                <Field type="password" name="password" />
-                  <ErrorMessage name="password" component="div" />
+                <Field type="password" name="password" className='text-format'/>
+                  <ErrorMessage name="password" component="div" className='errorStyle'/>
                 </label>
                 <label>
                   Confirm Password:
-                <Field type="password" name="changepassword" />
-                  <ErrorMessage name="changepassword" component="div" />
+                <Field type="password" name="changepassword" className='text-format'/>
+                  <ErrorMessage name="changepassword" component="div" className='errorStyle'/>
                 </label>
-                <button type="submit" disabled={isSubmitting}>
+                <button type="submit" disabled={isSubmitting} className="customButton">
                   Submit
               </button>
               </Form>

@@ -103,7 +103,7 @@ class UpdatePatient extends React.PureComponent {
     return (
       <>
         
-        <div style={{alignSelf:'center'}}>
+        <div style={{alignSelf:'center', width:"50%"}}>
         <Link to='/'>Go to Home </Link>
               <Formik
           initialValues={{ 
@@ -125,54 +125,54 @@ class UpdatePatient extends React.PureComponent {
           {({ isSubmitting }) => (
             <Form>
               <label>
-              FirstName: <Field type="text" name="FirstName" values={propsData && propsData.FirstName}/>
-                <ErrorMessage name="FirstName" component="div" />
+              FirstName: <Field type="text" name="FirstName" values={propsData && propsData.FirstName} className='text-format'/>
+                <ErrorMessage name="FirstName" component="div" className='errorStyle'/>
               </label>
               <label>
-              LastName: <Field type="text" name="LastName" />
-                <ErrorMessage name="LastName" component="div" />
+              LastName: <Field type="text" name="LastName" className='text-format'/>
+                <ErrorMessage name="LastName" component="div" className='errorStyle'/>
               </label>
               <label>
-              Mobile: <Field type="text" name="Mobile" />
-                <ErrorMessage name="Mobile" component="div" />
+              Mobile: <Field type="text" name="Mobile" className='text-format'/>
+                <ErrorMessage name="Mobile" component="div" className='errorStyle'/>
               </label>
               <label>
-              Email: <Field type="email" name="email" />
-                <ErrorMessage name="email" component="div" />
+              Email: <Field type="email" name="email" className='text-format'/>
+                <ErrorMessage name="email" component="div" className='errorStyle'/>
               </label>
               <label>
-              Medicine: <Field type="text" name="Medicine" />
-                <ErrorMessage name="Medicine" component="div" />
+              Medicine: <Field type="text" name="Medicine" className='text-format'/>
+                <ErrorMessage name="Medicine" component="div" className='errorStyle'/>
               </label>
               <label>
-              Diagnosis: <Field type="text" name="Diagnosys" />
-                <ErrorMessage name="Diagnosys" component="div" />
+              Diagnosis: <Field type="text" name="Diagnosys" className='text-format'/>
+                <ErrorMessage name="Diagnosys" component="div" className='errorStyle'/>
               </label>
               <label>
-              Address: <Field type="text" name="Address" />
-                <ErrorMessage name="Address" component="div" />
+              Address: <Field type="text" name="Address" className='text-format'/>
+                <ErrorMessage name="Address" component="div" className='errorStyle'/>
               </label>
               <label>
-              City: <Field type="text" name="City" />
-                <ErrorMessage name="City" component="div" />
+              City: <Field type="text" name="City" className='text-format'/>
+                <ErrorMessage name="City" component="div" className='errorStyle'/>
               </label>
               
               <label>
-              State: <Field type="text" name="State" />
-                <ErrorMessage name="State" component="div" />
+              State: <Field type="text" name="State" className='text-format'/>
+                <ErrorMessage name="State" component="div" className='errorStyle'/>
               </label>
               <label>
-              Country: <Field type="text" name="Country" />
-                <ErrorMessage name="Country" component="div" />
+              Country: <Field type="text" name="Country" className='text-format'/>
+                <ErrorMessage name="Country" component="div" className='errorStyle'/>
               </label>
               <label>
-              Pincode: <Field type="text" name="Pincode" />
-                <ErrorMessage name="Pincode" component="div" />
+              Pincode: <Field type="text" name="Pincode" className='text-format'/>
+                <ErrorMessage name="Pincode" component="div" className='errorStyle'/>
               </label>
-              <button type="submit" disabled={isSubmitting}>
+              <button type="submit" disabled={isSubmitting} className="customButton">
                 Submit
               </button>
-              <button type="submit" disabled={isSubmitting} onClick={this.props.closeUpdateModal}>
+              <button type="submit" disabled={isSubmitting} onClick={this.props.closeUpdateModal} className="customButton">
                 Cancel
               </button>
             </Form>

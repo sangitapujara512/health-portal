@@ -14,6 +14,7 @@ import {
 } from 'react-router-dom';
 import '../../../src/App.css';
 import UpdatePatient from './UpdatePatient';
+import AddIcon from'@material-ui/icons/AddOutlined';
 
 class Search extends Component {
 
@@ -95,7 +96,7 @@ class Search extends Component {
         
       if(this.state.search == null)
           return data
-      else if(data.FirstName.toLowerCase().includes(this.state.search.toLowerCase()) || data.Medicine.toLowerCase().includes(this.state.search.toLowerCase())){
+      else if(data.FirstName.toLowerCase().includes(this.state.search.toLowerCase()) || data.Medicine.toLowerCase().includes(this.state.search.toLowerCase()) || data.Diagnosys.toLowerCase().includes(this.state.search.toLowerCase())){
           return data
       }
     }).map(data=>{
@@ -105,22 +106,22 @@ class Search extends Component {
             <Table aria-label="simple table">             
               <TableBody>                
                   <TableRow key={data.FirstName}>
-                    <TableCell component="th" scope="row">
+                    <TableCell component="th" scope="row" style={{width:'10%'}}>
                     {data.FirstName} {data.LastName}
                     </TableCell>
-                    <TableCell component="th" scope="row">
+                    <TableCell component="th" scope="row" style={{width:'10%'}}>
                     {data.Mobile}
                     </TableCell>
-                    <TableCell component="th" scope="row">
+                    <TableCell component="th" scope="row" style={{width:'10%'}}>
                     {data.email}
                     </TableCell>
-                    <TableCell component="th" scope="row">                   
+                    <TableCell component="th" scope="row" style={{width:'10%'}}>                   
                       {data.Diagnosys}
                     </TableCell>
-                    <TableCell component="th" scope="row">                    
+                    <TableCell component="th" scope="row" style={{width:'10%'}}>                    
                        {data.Medicine}
                     </TableCell>
-                    <TableCell component="th" scope="row">
+                    {/* <TableCell component="th" scope="row">
                     {data.Address}
                     </TableCell>
                     <TableCell component="th" scope="row">
@@ -134,10 +135,10 @@ class Search extends Component {
                     </TableCell>
                     <TableCell component="th" scope="row">
                     {data.Pincode}
-                    </TableCell>
-                    <TableCell align="center"><Link to={{pathname:'/patientprofile',viewProfileProps:{data:data}}}>View Profile</Link></TableCell>
-                    <TableCell align="center"><button onClick={this.handleUpdate.bind(this, data)} >Update</button></TableCell>
-                  <TableCell align="center"><button onClick={this.handleDelete.bind(this, data)}>Delete</button></TableCell>
+                    </TableCell> */}
+                    <TableCell align="center" style={{width:'10%'}}><Link to={{pathname:'/patientprofile',viewProfileProps:{data:data}}}>View Profile</Link></TableCell>
+                    <TableCell align="center" style={{width:'10%'}}><button onClick={this.handleUpdate.bind(this, data)} className="customButton" >Update</button></TableCell>
+                  <TableCell align="center" style={{width:'10%'}}><button onClick={this.handleDelete.bind(this, data)} className="customButton">Delete</button></TableCell>
                   </TableRow>                
               </TableBody>
             </Table>
@@ -176,26 +177,33 @@ class Search extends Component {
         {/* <div>ADD</div> */}
           </Modal>
 
-          
-      <input type="text" placeholder="Enter item to be searched" style={elementStyle} onChange={(e)=>this.searchSpace(e)} />
+      <div style={{display:'flex',justifyContent:'space-between'}}>    
+      <input type="text" placeholder="Enter item to be searched" onChange={(e)=>this.searchSpace(e)}  className="searchStyle"/>
+      <div style={{ marginTop: 2 }}>Add Patient
+                  <div style={{ marginLeft: 5 }}>
+                    <AddIcon onClick={this.handleAdd} fontSize="large" className="addIcon"/>
+                  </div> 
+                  </div>
+                  </div> 
       <TableContainer style={{ padding: '20px' }} >         
             <Table aria-label="simple table">
-              <TableHead>              
-              <button onClick={this.handleAdd} style={{height:"50px",width:"50px"}}>Add Patient</button>
+              <TableHead>
+                          
+              {/* <button onClick={this.handleAdd} style={{height:"50px",width:"50px"}} className="customButton">Add Patient</button> */}
       <TableRow>
-                  <TableCell>Patient name</TableCell>
-                  <TableCell align="center">Phone</TableCell>
-                  <TableCell align="center">Email&nbsp;</TableCell>
-                  <TableCell align="center">Diagnosis</TableCell>
-                  <TableCell align="center">Prescribed Medication</TableCell>
-                  <TableCell align="center">Address</TableCell>
+                  <TableCell style={{width:'10%'}} >Patient name</TableCell>
+                  <TableCell align="center" style={{width:'10%'}} >Phone</TableCell>
+                  <TableCell align="center" style={{width:'10%'}} >Email&nbsp;</TableCell>
+                  <TableCell align="center" style={{width:'10%'}} >Diagnosis</TableCell>
+                  <TableCell align="center" style={{width:'10%'}} >Medication</TableCell>
+                  {/* <TableCell align="center">Address</TableCell>
                   <TableCell align="center">City</TableCell>
                   <TableCell align="center">State</TableCell>
                   <TableCell align="center">Country</TableCell>
-                  <TableCell align="center">Pincode</TableCell>
-                  <TableCell align="center">View Profile</TableCell>
-                  <TableCell align="center">Update</TableCell>
-                  <TableCell align="center">Delete</TableCell>
+                  <TableCell align="center">Pincode</TableCell> */}
+                  <TableCell align="center" style={{width:'10%'}} >View Profile</TableCell>
+                  <TableCell align="center" style={{width:'10%'}}>Update</TableCell>
+                  <TableCell align="center" style={{width:'10%'}}>Delete</TableCell>
                 </TableRow>
                 </TableHead>
                 </Table>

@@ -36,13 +36,15 @@ logout=()=>{
 }
 
   render() {
+
     const {showModal,showAddModal}=this.state
     const getRole = this.props && this.props.login[0] && this.props.login[0].login.role;
     
     let patientlist = this.props && this.props.patient[0] && this.props.patient[0].patientList;
-    patientlist= patientlist && patientlist[0];    
-    
+    patientlist= patientlist && patientlist[0];
+    if(getRole === 'doctor'){
     return (
+      
       <div>
         <Link to='/'>Go to Home </Link>
         {getRole && getRole === 'doctor' || getRole && getRole === 'patient' ? <Link to='/' style={{padding:'20px'}} onClick={this.logout}>
@@ -53,7 +55,16 @@ logout=()=>{
             <Search/>
       </div>
       </div>
-    )
+    )}
+    else{
+      return (
+        <>
+      <div> Access denied to view this content!
+        <Link to='/'>Go to Home </Link>
+      </div>
+      </>)
+
+    }
   }
 }
 

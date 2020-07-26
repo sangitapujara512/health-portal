@@ -10,6 +10,8 @@ import {
     Link as Link,
   } from 'react-router-dom';  
   import { withToastManager } from 'react-toast-notifications';
+  import Grid from '@material-ui/core/Grid';
+  import Container from '@material-ui/core/Container';
 
 // Validations added 
 const loginSchema = Yup.object().shape({
@@ -181,10 +183,19 @@ if(this.state.wrongPassword !== prevState.wrongPassword){
       } 
     return (
       <>
-        <div style={{alignSelf:'center'}}>
-        <Link to='/'>Go to Home </Link>
-        <h1>Login</h1>
-
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            lg={12}
+            md={12}   
+             
+            >
+            <Container
+              component='main'
+              maxWidth='xs'
+              >
+                <h1>Log In </h1>
         {/* Login form  */}
         <Formik
           initialValues={{ email: "", password: "" }}
@@ -194,21 +205,29 @@ if(this.state.wrongPassword !== prevState.wrongPassword){
           {({ isSubmitting }) => (
             <Form>
               <label>
-                Email: <Field type="email" name="email" />
-                <ErrorMessage name="email" component="div" />
+                Email: <Field type="email" name="email" className='text-format'/>
+                <ErrorMessage name="email" component="div" className='errorStyle'/>
               </label>
               <label>
                 Password:
-                <Field type="password" name="password" />
-                <ErrorMessage name="password" component="div" />
+                <Field type="password" name="password" className='text-format' />
+                <ErrorMessage name="password" component="div" className='errorStyle'/>
               </label>
-              <button type="submit" disabled={isSubmitting}>
+              <button type="submit" disabled={isSubmitting}
+              className="customButton"
+              >
                 Submit
               </button>
             </Form>
           )}
         </Formik>
-        </div>
+        {/* </div> */}
+            </Container>
+          </Grid>          
+       
+        <Grid>          
+        </Grid>
+     
       </>
     );
   }

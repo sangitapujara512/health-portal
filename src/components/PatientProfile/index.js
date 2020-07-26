@@ -20,7 +20,7 @@ import {setLogin} from '../../actions/loginAction'
   const patientDetails = useSelector((state) => state.patient.patientList[0]);
   const getRole = useSelector((state) => state.login && state.login.login && state.login.login.role)  
   const userCredentials = useSelector((state) => state.login.login.email)
-  let result = patientDetails && patientDetails.filter(patient => patient.email === userCredentials);
+  let result = patientDetails && patientDetails.filter(patient => patient.email.toLowerCase() === userCredentials.toLowerCase());
   let entry=result && result[0];
   
   // When doctor cliks view profile then pass data and capture using props.location and pass to PatientDetails to show 

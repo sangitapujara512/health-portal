@@ -1,3 +1,63 @@
+Sample healthcare web portal
+
+Usage :
+Doctor login :
+
+1) On Login
+email : any valid email id
+password : Healthcare
+Notifications shown on login.
+
+2) On Login Doctor is directed to Patient List.
+
+On Patientlist page
+Doctor can  
+view particular patient profile
+update particular patient profile
+delete particular patient profile
+Add new patient
+
+navigate to Home page
+logout -> onlogout redirected to login page
+
+On Home page :
+logout
+navigate to patient list
+Doctor changes url to non existing then shown 404 page
+
+On patient login:
+
+1) Login 
+email : any  email id out of the data set from json(denis.penk@gmail.com , ketty.thomson@gmail.com, john.doe@gmail.com)
+password : Password
+Notifications shown on login.
+
+2) On Login Patient is directed to ones profile
+3) Patient can :
+navigate to home page
+logout
+update password
+
+on update password user is directed to login page
+on login user should now enter new password set
+(Simulated this operation using sessionStorage, if used deltes sessionStorage then patient can login with password "Password")
+
+4) From Home page patient can
+navigate to ones profile page
+logout
+patient changes url to non existing then shown 404 page
+patient changes url to show patientList - msg shown "Access denied to view this content!"
+
+
+Developers Note :
+Git url : https://github.com/sangitapujara512/health-portal
+git clone / download zip
+cd directory health-portal
+npm install
+npm start
+
+Code deployed to Heroku : url 
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
